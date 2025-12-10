@@ -1,0 +1,38 @@
+def solve_gift_shop_part_two(input_data):
+    cleaned_data = input_data.replace('\n', '').strip()
+    ranges = cleaned_data.split(',')
+    total_invalid_sum = 0
+    
+    for range_str in ranges:
+        start_s, end_s = range_str.split('-')
+        start = int(start_s)
+        end = int(end_s)
+        
+        for number in range(start, end + 1):
+            s_num = str(number)
+            length = len(s_num)
+            
+            is_invalid = False
+            
+            for k in range(2, length + 1):
+                if length % k == 0:
+                    chunk_size = length // k
+                    substring = s_num[:chunk_size]
+                    
+                    reconstructed = substring * k
+                    
+                    if reconstructed == s_num:
+                        is_invalid = True
+                        break #found a pattern, no need to check other k values
+            
+            if is_invalid:
+                total_invalid_sum += number
+                
+    return total_invalid_sum
+
+
+file = open("input.txt", "r")
+data = file.read()
+result = solve_gift_shop_part_two(data)
+print(f"Sum of invalid IDs (Part Two): {result}")
+file.close()
