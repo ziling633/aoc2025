@@ -1,0 +1,31 @@
+def solve_safe_puzzle(rotations):
+    current_pos = 50
+    password_count = 0
+    
+    for rotation in rotations:
+        direction = rotation[0]
+        amount = int(rotation[1:])
+        
+        if direction == 'R':
+            #adds to position, wrapping at 100
+            current_pos = (current_pos + amount) % 100
+        elif direction == 'L':
+            #subtracts from position, wrapping at 100
+            current_pos = (current_pos - amount) % 100
+        if current_pos == 0:
+            password_count += 1
+            
+    return password_count
+
+all_rotations = []
+
+file = open('input.txt','r')
+for line in file:
+    clean_line = line.strip()
+    if clean_line:
+        all_rotations.append(clean_line)
+
+    result = solve_safe_puzzle(all_rotations)
+    
+print(f"The password is: {result}")
+file.close()
