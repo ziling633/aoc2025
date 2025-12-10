@@ -1,0 +1,33 @@
+def solve_gift_shop(input_data):
+    cleaned_data = input_data.replace('\n', '').strip()
+    
+    ranges = cleaned_data.split(',')
+    total_invalid_sum = 0
+    
+    for range_str in ranges:
+        start_s, end_s = range_str.split('-')
+        start = int(start_s)
+        end = int(end_s)
+        
+        for number in range(start, end + 1):
+            s_num = str(number)
+            length = len(s_num)
+            
+            if length % 2 != 0:
+                continue
+                
+            mid = length // 2
+            left_half = s_num[:mid]
+            right_half = s_num[mid:]
+            
+            if left_half == right_half:
+                total_invalid_sum += number
+                
+    return total_invalid_sum
+
+file = open("input.txt", "r")
+data = file.read()
+result = solve_gift_shop(data)
+print(f"Sum of invalid IDs: {result}")
+
+file.close()
