@@ -1,0 +1,37 @@
+def solve_safe_part_two(rotations):
+    current_virtual_pos = 50 
+    total_zeros = 0
+    
+    for rotation in rotations:            
+        direction = rotation[0]
+        amount = int(rotation[1:])
+        
+        if direction == 'R':
+            next_pos = current_virtual_pos + amount
+            count = (next_pos // 100) - (current_virtual_pos // 100)
+            
+            total_zeros += count
+            current_virtual_pos = next_pos
+            
+        elif direction == 'L':
+            next_pos = current_virtual_pos - amount
+            count = ((current_virtual_pos - 1) // 100) - ((next_pos - 1) // 100)
+            
+            total_zeros += count
+            current_virtual_pos = next_pos
+            
+    return total_zeros
+
+
+all_rotations = []
+
+file = open("input.txt", 'r')
+for line in file:
+    clean_line = line.strip()
+    if clean_line:
+        all_rotations.append(clean_line)
+
+    result = solve_safe_part_two(all_rotations)
+    
+print(f"The Part Two password is: {result}")
+file.close()
